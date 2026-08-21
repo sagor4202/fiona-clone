@@ -1,29 +1,26 @@
-import { FiHome, FiSearch, FiShoppingCart, FiUser, FiHeart } from 'react-icons/fi';
+import { FiHome, FiGrid, FiShoppingCart, FiUser } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
-export default function BottomNav() {
+export default function BottomNav({ setIsCartOpen }) {
   return (
     <nav className="bottom-nav">
       <div className="bottom-nav-list">
-        <a href="/" className="bottom-nav-item active">
+        <Link to="/" className="bottom-nav-item active">
           <FiHome size={20} />
           <span>Home</span>
-        </a>
-        <a href="#" className="bottom-nav-item">
-          <FiSearch size={20} />
-          <span>Search</span>
-        </a>
-        <a href="#" className="bottom-nav-item">
+        </Link>
+        <Link to="/shop" className="bottom-nav-item">
+          <FiGrid size={20} />
+          <span>Shop</span>
+        </Link>
+        <button onClick={() => setIsCartOpen(true)} className="bottom-nav-item" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', padding: 0 }}>
           <FiShoppingCart size={20} />
           <span>Cart</span>
-        </a>
-        <a href="#" className="bottom-nav-item">
-          <FiHeart size={20} />
-          <span>Wishlist</span>
-        </a>
-        <a href="#" className="bottom-nav-item">
+        </button>
+        <Link to="/order-tracking" className="bottom-nav-item">
           <FiUser size={20} />
           <span>Account</span>
-        </a>
+        </Link>
       </div>
     </nav>
   );

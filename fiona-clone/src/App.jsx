@@ -1,49 +1,50 @@
+import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
-import HeroSlider from './components/HeroSlider';
-import FeaturedCategories from './components/FeaturedCategories';
-import BentoBanner from './components/BentoBanner';
-import ProductSection from './components/ProductSection';
-import TopSelling from './components/TopSelling';
-import BrandSection from './components/BrandSection';
-import BrandProducts from './components/BrandProducts';
-import CategoryTabs from './components/CategoryTabs';
-import FeaturedProducts from './components/FeaturedProducts';
-import KidsSection from './components/KidsSection';
 import Footer from './components/Footer';
 import BottomNav from './components/BottomNav';
-import { cubanShirts, premiumPanjabi } from './data/products';
+import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import TermsConditionPage from './pages/TermsConditionPage';
+import RefundPolicyPage from './pages/RefundPolicyPage';
+import ShippingPage from './pages/ShippingPage';
+import OrderTrackingPage from './pages/OrderTrackingPage';
+import ShopPage from './pages/ShopPage';
+import ProductDetailsPage from './pages/ProductDetailsPage';
+import CartPage from './pages/CartPage';
+import CheckoutPage from './pages/CheckoutPage';
+import ThankYouPage from './pages/ThankYouPage';
+import FloatingCart from './components/FloatingCart';
+import CartDrawer from './components/CartDrawer';
 
 function App() {
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
   return (
     <div className="page-wrapper">
-      <Header />
-      <main>
-        <HeroSlider />
-        <FeaturedCategories />
-        <BentoBanner />
-        <ProductSection
-          title="CUBAN SHIRT"
-          subtitle="Upto 20% off!"
-          viewAllLink="#"
-          products={cubanShirts}
-          isSlider={true}
-        />
-        <ProductSection
-          title="PREMIUM PANJABI"
-          subtitle="Buy Premium Panjabi at best Offer!"
-          viewAllLink="#"
-          products={premiumPanjabi}
-          isSlider={true}
-        />
-        <TopSelling />
-        <BrandSection />
-        {/* <BrandProducts /> */}
-        {/* <CategoryTabs /> */}
-        <FeaturedProducts />
-        <KidsSection />
-      </main>
+      <Header setIsCartOpen={setIsCartOpen} />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+        <Route path="/terms-conditions" element={<TermsConditionPage />} />
+        <Route path="/refund-policy" element={<RefundPolicyPage />} />
+        <Route path="/shipping" element={<ShippingPage />} />
+        <Route path="/order-tracking" element={<OrderTrackingPage />} />
+        <Route path="/shop" element={<ShopPage />} />
+        <Route path="/product/:id" element={<ProductDetailsPage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/thank-you" element={<ThankYouPage />} />
+      </Routes>
       <Footer />
-      <BottomNav />
+      <BottomNav setIsCartOpen={setIsCartOpen} />
+      
+      <FloatingCart setIsCartOpen={setIsCartOpen} />
+      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </div>
   );
 }

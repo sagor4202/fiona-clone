@@ -8,6 +8,7 @@ export default function KidsSection() {
       subtitle="For your Little Star!"
       viewAllLink="#"
       products={kidsProducts}
+      isSlider={true}
     />
   );
 }

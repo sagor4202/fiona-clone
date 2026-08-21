@@ -1,4 +1,5 @@
 import { FiHeart, FiShoppingBag } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import { formatPrice } from '../data/products';
 
 function getBadgeClass(badge) {
@@ -15,7 +16,9 @@ export default function ProductCard({ product }) {
   return (
     <div className="product-card">
       <div className="product-card-image">
-        <img src={product.image} alt={product.name} loading="lazy" />
+        <Link to={`/product/${product.id}`}>
+          <img src={product.image} alt={product.name} loading="lazy" />
+        </Link>
         <div className="product-badge">
           {product.badge && (
             <span className={`badge ${getBadgeClass(product.badge)}`}>{product.badge}</span>
@@ -30,7 +33,7 @@ export default function ProductCard({ product }) {
       </div>
       <div className="product-card-body">
         <h4 className="product-card-title">
-          <a href={product.link}>{product.name}</a>
+          <Link to={`/product/${product.id}`}>{product.name}</Link>
         </h4>
         <div className="product-card-price">
           <span className="price-current">{formatPrice(product.price)}</span>

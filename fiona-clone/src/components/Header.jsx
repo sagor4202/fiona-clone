@@ -1,10 +1,10 @@
-import { useState, useRef, useEffect } from 'react';
-import { FiSearch, FiUser, FiHeart, FiShoppingCart, FiNavigation, FiMenu, FiX } from 'react-icons/fi';
+import { useState } from 'react';
+import { FiSearch, FiUser, FiHeart, FiShoppingCart, FiNavigation, FiX } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import { logo, navMenuItems } from '../data/products';
 
-export default function Header() {
+export default function Header({ setIsCartOpen }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [openSubmenu, setOpenSubmenu] = useState(null);
 
   return (
     <header className="header">
@@ -13,14 +13,20 @@ export default function Header() {
         <div className="container">
           <div className="header-left">
             <button
-              className="mobile-menu-toggle"
+              className="mobile-menu-toggle custom-hamburger"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              {mobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+              {mobileMenuOpen ? <FiX size={24} /> : (
+                <div className="luxury-menu-icon">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              )}
             </button>
-            <a href="/" className="logo">
+            <Link to="/" className="logo">
               <img src={logo} alt="Fiona" />
-            </a>
+            </Link>
           </div>
 
           <div className="header-searchbar">
@@ -31,25 +37,25 @@ export default function Header() {
           </div>
 
           <div className="header-right">
-            <a href="#" className="header-action">
+            <Link to="/order-tracking" className="header-action">
               <FiNavigation size={20} />
               <span>Track Order</span>
-            </a>
-            <a href="#" className="header-action">
+            </Link>
+            <Link to="#" className="header-action">
               <FiUser size={20} />
               <span>Sign In</span>
-            </a>
-            <a href="#" className="header-action">
+            </Link>
+            <Link to="#" className="header-action">
               <FiHeart size={20} />
               <span>Wishlist</span>
-            </a>
-            <a href="#" className="header-action">
+            </Link>
+            <button onClick={() => setIsCartOpen(true)} className="header-action" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit' }}>
               <div style={{ position: 'relative' }}>
                 <FiShoppingCart size={20} />
                 <span className="cart-count">0</span>
               </div>
               <span>Cart</span>
-            </a>
+            </button>
           </div>
         </div>
       </div>
@@ -58,25 +64,37 @@ export default function Header() {
       <div className="header-bottom">
         <div className="container">
           <div className="sticky-logo">
-            <a href="/" className="logo">
+            <Link to="/" className="logo">
               <img src={logo} alt="Fiona" />
-            </a>
+            </Link>
           </div>
           <nav className="main-nav">
             <ul className="menu">
               {navMenuItems.map((item, idx) => (
                 <li key={idx} className={item.children ? 'has-submenu' : ''}>
-                  <a href={item.link}>{item.label}</a>
+                  {item.link.startsWith('/') ? (
+                    <Link to={item.link}>{item.label}</Link>
+                  ) : (
+                    <a href={item.link}>{item.label}</a>
+                  )}
                   {item.children && (
                     <ul className="submenu">
                       {item.children.map((child, cIdx) => (
                         <li key={cIdx} className={child.children ? 'has-submenu' : ''}>
-                          <a href={child.link}>{child.label}</a>
+                          {child.link.startsWith('/') ? (
+                            <Link to={child.link}>{child.label}</Link>
+                          ) : (
+                            <a href={child.link}>{child.label}</a>
+                          )}
                           {child.children && (
                             <ul className="submenu">
                               {child.children.map((sub, sIdx) => (
                                 <li key={sIdx}>
-                                  <a href={sub.link}>{sub.label}</a>
+                                  {sub.link.startsWith('/') ? (
+                                    <Link to={sub.link}>{sub.label}</Link>
+                                  ) : (
+                                    <a href={sub.link}>{sub.label}</a>
+                                  )}
                                 </li>
                               ))}
                             </ul>
@@ -113,10 +131,17 @@ export default function Header() {
         </div>
         {navMenuItems.map((item, idx) => (
           <div key={idx} style={{ borderBottom: '1px solid #eee' }}>
-            <a href={item.link} style={{
-              display: 'block', padding: '12px 0', fontSize: 14, fontWeight: 600,
-              color: '#222831'
-            }}>{item.label}</a>
+            {item.link.startsWith('/') ? (
+              <Link to={item.link} onClick={() => setMobileMenuOpen(false)} style={{
+                display: 'block', padding: '12px 0', fontSize: 14, fontWeight: 600,
+                color: '#222831'
+              }}>{item.label}</Link>
+            ) : (
+              <a href={item.link} onClick={() => setMobileMenuOpen(false)} style={{
+                display: 'block', padding: '12px 0', fontSize: 14, fontWeight: 600,
+                color: '#222831'
+              }}>{item.label}</a>
+            )}
           </div>
         ))}
       </div>

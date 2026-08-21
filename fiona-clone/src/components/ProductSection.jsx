@@ -1,6 +1,7 @@
 import ProductCard from './ProductCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
+import { Link } from 'react-router-dom';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
@@ -15,7 +16,7 @@ export default function ProductSection({ title, subtitle, viewAllLink, products,
               {subtitle && <span className="subtitle">{subtitle}</span>}
             </h2>
           </div>
-          {viewAllLink && <a href={viewAllLink} className="view-all">View all</a>}
+          {viewAllLink && <Link to="/shop" className="view-all">View all</Link>}
         </div>
         {isSlider ? (
           <Swiper

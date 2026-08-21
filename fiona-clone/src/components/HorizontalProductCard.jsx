@@ -1,4 +1,5 @@
 import { FiShoppingBag } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import { formatPrice } from '../data/products';
 
 function getBadgeClass(badge) {
@@ -17,7 +18,9 @@ export default function HorizontalProductCard({ product }) {
   return (
     <div className="horizontal-product-card">
       <div className="horizontal-product-image">
-        <img src={product.image} alt={product.name} loading="lazy" />
+        <Link to={`/product/${product.id}`}>
+          <img src={product.image} alt={product.name} loading="lazy" />
+        </Link>
       </div>
       <div className="horizontal-product-body">
         <div className="horizontal-badge-container">
@@ -26,7 +29,7 @@ export default function HorizontalProductCard({ product }) {
           )}
         </div>
         <h4 className="horizontal-product-title">
-          <a href={product.link}>{product.name}</a>
+          <Link to={`/product/${product.id}`}>{product.name}</Link>
         </h4>
         <div className="horizontal-product-price">
           <span className="price-current">{formatPrice(product.price)}</span>

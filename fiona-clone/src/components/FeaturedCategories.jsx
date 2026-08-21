@@ -1,7 +1,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
-import { featuredCategories } from '../data/products';
+import { oMenCategories } from '../data/products';
 
 export default function FeaturedCategories() {
   return (
@@ -18,12 +18,12 @@ export default function FeaturedCategories() {
           breakpoints={{
             480: { slidesPerView: 3 },
             768: { slidesPerView: 4 },
-            1024: { slidesPerView: 6 },
+            1024: { slidesPerView: 5 },
           }}
           className="featured-categories-carousel"
           style={{ padding: '10px 0' }}
         >
-          {featuredCategories.map((cat) => (
+          {oMenCategories && oMenCategories.map((cat) => (
             <SwiperSlide key={cat.id}>
               <a href={cat.link} className="category-card" style={{ display: 'block' }}>
                 <img src={cat.image} alt={cat.name} />
