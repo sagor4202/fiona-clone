@@ -1429,3 +1429,39 @@ img {
   transform: scale(1.15);
   box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }
+
+/* Buy Now Button Animation */
+@keyframes pulseZoom {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.btn-buy-now {
+  animation: pulseZoom 1.5s infinite ease-in-out;
+}
+.btn-buy-now:hover {
+  animation: none;
+  transform: scale(1.02);
+}
+
+/* WhatsApp Button Shake Animation */
+@keyframes shakeInterval {
+  0%, 80% { transform: translateX(0); }
+  82% { transform: translateX(-4px) rotate(-4deg); }
+  84% { transform: translateX(4px) rotate(4deg); }
+  86% { transform: translateX(-4px) rotate(-4deg); }
+  88% { transform: translateX(4px) rotate(4deg); }
+  90% { transform: translateX(-4px) rotate(-4deg); }
+  92% { transform: translateX(4px) rotate(4deg); }
+  94% { transform: translateX(0); }
+  100% { transform: translateX(0); }
+}
+
+.btn-whatsapp {
+  animation: shakeInterval 4s infinite ease-in-out;
+}
+.btn-whatsapp:hover {
+  animation: none;
+  background: #1da851 !important;
+}

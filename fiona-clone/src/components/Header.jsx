@@ -1,10 +1,16 @@
 import { useState } from 'react';
 import { FiSearch, FiUser, FiHeart, FiShoppingCart, FiNavigation, FiX } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import { logo, navMenuItems } from '../data/products';
+import { logo, oMenCategories } from '../data/products';
 
 export default function Header({ setIsCartOpen }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Convert categories to menu items format
+  const menuItems = oMenCategories ? oMenCategories.map(cat => ({
+    label: cat.name.toUpperCase(),
+    link: cat.link
+  })) : [];
 
   return (
     <header className="header">
@@ -41,11 +47,11 @@ export default function Header({ setIsCartOpen }) {
               <FiNavigation size={20} />
               <span>Track Order</span>
             </Link>
-            <Link to="#" className="header-action">
+            <Link to="/signin" className="header-action">
               <FiUser size={20} />
               <span>Sign In</span>
             </Link>
-            <Link to="#" className="header-action">
+            <Link to="/wishlist" className="header-action">
               <FiHeart size={20} />
               <span>Wishlist</span>
             </Link>
@@ -70,7 +76,7 @@ export default function Header({ setIsCartOpen }) {
           </div>
           <nav className="main-nav">
             <ul className="menu">
-              {navMenuItems.map((item, idx) => (
+              {menuItems.map((item, idx) => (
                 <li key={idx} className={item.children ? 'has-submenu' : ''}>
                   {item.link.startsWith('/') ? (
                     <Link to={item.link}>{item.label}</Link>
@@ -129,7 +135,7 @@ export default function Header({ setIsCartOpen }) {
             background: 'none', border: 'none', fontSize: 22, cursor: 'pointer'
           }}><FiX /></button>
         </div>
-        {navMenuItems.map((item, idx) => (
+        {menuItems.map((item, idx) => (
           <div key={idx} style={{ borderBottom: '1px solid #eee' }}>
             {item.link.startsWith('/') ? (
               <Link to={item.link} onClick={() => setMobileMenuOpen(false)} style={{

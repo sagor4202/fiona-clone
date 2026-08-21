@@ -39,9 +39,16 @@ export default function Footer() {
           <div>
             <h4 style={{ fontSize: '15px', fontWeight: 'bold', marginBottom: '20px', color: '#fff' }}>Company</h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              {['About us', 'Contact us', 'Terms and Conditions', 'Privacy Policy', 'Shipping Policy', 'Return & Refund Policy'].map(item => (
-                <li key={item} style={{ marginBottom: '12px' }}>
-                  <Link to="#" style={{ color: '#ccc', textDecoration: 'none', fontSize: '13px' }}>{item}</Link>
+              {[
+                { label: 'About us', link: '/about' },
+                { label: 'Contact us', link: '/contact' },
+                { label: 'Terms and Conditions', link: '/terms-conditions' },
+                { label: 'Privacy Policy', link: '/privacy-policy' },
+                { label: 'Shipping Policy', link: '/shipping' },
+                { label: 'Return & Refund Policy', link: '/refund-policy' }
+              ].map(item => (
+                <li key={item.label} style={{ marginBottom: '12px' }}>
+                  <Link to={item.link} style={{ color: '#ccc', textDecoration: 'none', fontSize: '13px' }}>{item.label}</Link>
                 </li>
               ))}
             </ul>

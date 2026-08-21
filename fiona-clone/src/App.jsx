@@ -16,6 +16,8 @@ import ProductDetailsPage from './pages/ProductDetailsPage';
 import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import ThankYouPage from './pages/ThankYouPage';
+import SignInPage from './pages/SignInPage';
+import WishlistPage from './pages/WishlistPage';
 import FloatingCart from './components/FloatingCart';
 import CartDrawer from './components/CartDrawer';
 
@@ -39,6 +41,8 @@ function App() {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/thank-you" element={<ThankYouPage />} />
+        <Route path="/signin" element={<SignInPage />} />
+        <Route path="/wishlist" element={<WishlistPage />} />
       </Routes>
       <Footer />
       <BottomNav setIsCartOpen={setIsCartOpen} />

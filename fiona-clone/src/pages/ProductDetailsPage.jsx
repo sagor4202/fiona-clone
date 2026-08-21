@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { cubanShirts, premiumPanjabi, topSellingProducts, kidsProducts, formatPrice } from '../data/products';
 import { FiShoppingBag, FiHeart, FiShare2, FiStar, FiChevronRight } from 'react-icons/fi';
+import { FaWhatsapp } from 'react-icons/fa';
 import ProductCard from '../components/ProductCard';
 
 export default function ProductDetailsPage() {
@@ -102,9 +103,15 @@ export default function ProductDetailsPage() {
               <button style={{ flex: 1, padding: '14px', background: 'var(--primary-color)', color: '#fff', border: 'none', borderRadius: '4px', fontSize: '15px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px' }}>
                 ADD TO CART
               </button>
-              <button style={{ flex: 1, padding: '14px', background: '#333', color: '#fff', border: 'none', borderRadius: '4px', fontSize: '15px', fontWeight: 'bold', cursor: 'pointer' }}>
+              <button className="btn-buy-now" style={{ flex: 1, padding: '14px', background: '#333', color: '#fff', border: 'none', borderRadius: '4px', fontSize: '15px', fontWeight: 'bold', cursor: 'pointer' }}>
                 BUY NOW
               </button>
+            </div>
+            
+            <div style={{ marginTop: '15px' }}>
+              <a href="https://wa.me/8801841990151" target="_blank" rel="noopener noreferrer" className="btn-whatsapp" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px', width: '100%', padding: '14px', background: '#25D366', color: '#fff', textDecoration: 'none', borderRadius: '4px', fontSize: '15px', fontWeight: 'bold', transition: 'background 0.2s' }}>
+                <FaWhatsapp size={20} /> Order via WhatsApp
+              </a>
             </div>
             
             <div style={{ marginTop: '20px', fontSize: '13px', color: '#666' }}>
