@@ -1,20 +1,46 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { cubanShirts, premiumPanjabi, topSellingProducts, kidsProducts, formatPrice } from '../data/products';
-import { FiShoppingBag, FiHeart, FiShare2, FiStar, FiChevronRight } from 'react-icons/fi';
+import { FiShoppingBag, FiHeart, FiShare2, FiStar, FiChevronRight, FiChevronLeft } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 import ProductCard from '../components/ProductCard';
 
 export default function ProductDetailsPage() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const [activeTab, setActiveTab] = useState('specification');
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState('M');
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
   // Safe extraction of products
   const allProducts = [...(cubanShirts || []), ...(premiumPanjabi || []), ...(topSellingProducts || []), ...(kidsProducts || [])];
-  const product = allProducts.find(p => p.id === parseInt(id)) || allProducts[0];
+  
+  const generateSlug = (name) => {
+    return name ? name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') : '';
+  };
+  
+  const product = allProducts.find(p => generateSlug(p.name) === slug) || allProducts[0];
   const relatedProducts = allProducts.slice(0, 5);
+
+  // Fake a diverse gallery for demonstration
+  const galleryImages = product ? [
+    product.image,
+    relatedProducts[0]?.image || product.image,
+    relatedProducts[1]?.image || product.image,
+    relatedProducts[2]?.image || product.image
+  ] : [];
+
+  useEffect(() => {
+    setCurrentImageIndex(0);
+  }, [product]);
+
+  const handlePrev = () => {
+    setCurrentImageIndex((prev) => (prev === 0 ? galleryImages.length - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentImageIndex((prev) => (prev === galleryImages.length - 1 ? 0 : prev + 1));
+  };
 
   if (!product) return <div className="container" style={{ padding: '100px 0', textAlign: 'center' }}>Product not found.</div>;
 
@@ -35,13 +61,23 @@ export default function ProductDetailsPage() {
           {/* Left: Gallery */}
           <div style={{ flex: '0 0 45%' }}>
             {product.badge && <span className="badge badge-offer" style={{ position: 'absolute', margin: '10px', zIndex: 10 }}>{product.badge}</span>}
-            <div style={{ width: '100%', background: '#f9f9f9', display: 'flex', justifyContent: 'center', border: '1px solid #eee' }}>
-              <img src={product.image} alt={product.name} style={{ width: '100%', objectFit: 'contain' }} />
+            <div style={{ width: '100%', background: '#f9f9f9', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #eee', padding: '20px', position: 'relative' }}>
+              <button onClick={handlePrev} style={{ position: 'absolute', left: '10px', background: '#fff', border: '1px solid #ddd', borderRadius: '50%', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', zIndex: 5, boxShadow: '0 2px 5px rgba(0,0,0,0.1)' }}>
+                <FiChevronLeft size={24} />
+              </button>
+              <img src={galleryImages[currentImageIndex]} alt={product.name} style={{ width: '100%', objectFit: 'contain', maxHeight: '400px' }} />
+              <button onClick={handleNext} style={{ position: 'absolute', right: '10px', background: '#fff', border: '1px solid #ddd', borderRadius: '50%', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', zIndex: 5, boxShadow: '0 2px 5px rgba(0,0,0,0.1)' }}>
+                <FiChevronRight size={24} />
+              </button>
             </div>
             <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
-              {[1, 2, 3, 4].map(idx => (
-                <div key={idx} style={{ width: '80px', height: '80px', border: idx === 1 ? '2px solid var(--primary-color)' : '1px solid #eee', cursor: 'pointer' }}>
-                  <img src={product.image} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              {galleryImages.map((img, idx) => (
+                <div 
+                  key={idx} 
+                  onClick={() => setCurrentImageIndex(idx)}
+                  style={{ width: '80px', height: '80px', border: currentImageIndex === idx ? '2px solid var(--primary-color)' : '1px solid #eee', cursor: 'pointer', opacity: currentImageIndex === idx ? 1 : 0.6 }}
+                >
+                  <img src={img} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="thumbnail" />
                 </div>
               ))}
             </div>

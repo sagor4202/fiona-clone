@@ -13,10 +13,15 @@ function getBadgeClass(badge) {
 }
 
 export default function ProductCard({ product }) {
+  const generateSlug = (name) => {
+    return name ? name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') : '';
+  };
+  const slug = generateSlug(product.name);
+
   return (
     <div className="product-card">
       <div className="product-card-image">
-        <Link to={`/product/${product.id}`}>
+        <Link to={`/product/${slug}`}>
           <img src={product.image} alt={product.name} loading="lazy" />
         </Link>
         <div className="product-badge">
@@ -33,7 +38,7 @@ export default function ProductCard({ product }) {
       </div>
       <div className="product-card-body">
         <h4 className="product-card-title">
-          <Link to={`/product/${product.id}`}>{product.name}</Link>
+          <Link to={`/product/${slug}`}>{product.name}</Link>
         </h4>
         <div className="product-card-price">
           <span className="price-current">{formatPrice(product.price)}</span>
